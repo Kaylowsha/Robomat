@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Matemático</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="setup-container" class="container">
+        <h1>Configuración del Juego</h1>
+        
+        <div class="form-group">
+            <label>Elige un escenario:</label>
+            <div id="scenario-cards-container" class="card-container">
+                <div class="card scenario-card selected" data-scenario-id="ship">
+                    <h3>Barco al Muelle</h3>
+                    <p>Ayuda al barco a llegar al muelle.</p>
+                </div>
+                <div class="card scenario-card" data-scenario-id="robot">
+                    <h3>Robot a la Carga</h3>
+                    <p>Conecta al robot a su cargador.</p>
+                </div>
+                <div class="card scenario-card" data-scenario-id="rocket">
+                    <h3>Cohete al Espacio</h3>
+                    <p>Lanza el cohete al espacio.</p>
+                </div>
+                <div class="card scenario-card" data-scenario-id="plant">
+                    <h3>Planta al Sol</h3>
+                    <p>Ayuda a la planta a crecer hacia el sol.</p>
+                </div>
+                <div class="card scenario-card" data-scenario-id="train">
+                    <h3>Tren a la Estación</h3>
+                    <p>Guía al tren a su estación.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Elige una o más tablas:</label>
+            <div id="table-cards-container" class="card-container"></div>
+            <button id="select-all-tables" class="util-button">Seleccionar Todas</button>
+        </div>
+
+        <div class="form-group">
+            <label>Cantidad de ejercicios:</label>
+            <div id="problems-cards-container" class="card-container"></div>
+        </div>
+
+        <button id="start-button">Empezar Juego</button>
+    </div>
+
+    <div id="game-container" class="container hidden">
+        <p id="game-title">Ayuda al barco a llegar al muelle.</p>
+
+        <div id="scene-container">
+            <svg id="scene-svg" viewBox="0 0 250 150" width="250" height="150">
+                <!-- Agua -->
+                <rect x="0" y="80" width="250" height="70" fill="#3498db" />
+                <!-- Muelle -->
+                <rect x="200" y="70" width="50" height="80" fill="#8B4513" />
+                <!-- Barco -->
+                <g id="ship" transform="translate(0,0)">
+                    <rect x="10" y="60" width="40" height="20" fill="#e74c3c" />
+                    <polygon points="10,60 0,50 0,80 10,80" fill="#e74c3c" />
+                    <rect x="25" y="45" width="5" height="15" fill="#7f8c8d" />
+                    <polygon points="25,45 35,45 30,30" fill="#7f8c8d" />
+                </g>
+                <!-- Olas/Salpicaduras (feedback) -->
+                <g id="waves" opacity="0">
+                    <circle cx="50" cy="85" r="3" fill="white" opacity="0.7" />
+                    <circle cx="55" cy="80" r="2" fill="white" opacity="0.7" />
+                </g>
+            </svg>
+        </div>
+
+        <div id="progress-container">
+            <label for="progress-bar">Progreso:</label>
+            <progress id="progress-bar" value="0" max="100"></progress>
+        </div>
+
+        <div id="timer-container">
+            <span id="timer-display">5</span>
+        </div>
+
+        <div id="problem-container">
+            <h2 id="problem-text"></h2>
+            <div id="answer-cards-container" class="card-container"></div>
+        </div>
+
+        <p id="feedback-text"></p>
+        <button id="restart-button" class="hidden">Jugar de Nuevo</button>
+        <button id="home-button" class="util-button hidden">Volver al Inicio</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+    <div id="summary-container" class="container hidden">
+        <h1>¡Juego Terminado!</h1>
+        <p id="summary-score"></p>
+        <p>Correctas: <span id="summary-total-correct"></span></p>
+        <p>Incorrectas: <span id="summary-total-incorrect"></span></p>
+        <p id="summary-message"></p>
+
+        <div id="summary-detailed-errors" class="summary-section">
+            <h3>Errores Detallados:</h3>
+            <ul id="detailed-errors-list"></ul>
+        </div>
+
+        <div id="summary-table-performance" class="summary-section">
+            <h3>Rendimiento por Tabla:</h3>
+            <div id="table-progress-bars"></div>
+        </div>
+
+        <button id="summary-restart-button" class="util-button">Jugar de Nuevo</button>
+        <button id="summary-home-button" class="util-button">Volver al Inicio</button>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="correct-sound" src="./sounds/correct.mp3" preload="auto"></audio>
+    <audio id="incorrect-sound" src="./sounds/incorrect.mp3" preload="auto"></audio>
